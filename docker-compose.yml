@@ -22,6 +22,7 @@ services:
       - app-network
 
   # Temporal Server
+  # mysql 열리기 전에 temporal-server 실행 안됨
   temporal-server:
     image: temporalio/auto-setup:latest
     container_name: temporal_server
@@ -54,6 +55,10 @@ services:
     networks:
       - app-network
   # Zookeeper for Kafka
+
+  # bootstrap.servers
+  # key.serializer, value.
+  # batch.size, linger.ms, buffer.memory, compression.type
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
     container_name: zookeeper
@@ -87,6 +92,10 @@ services:
       - app-network
 
   # Kafka Connect with Debezium for CDC
+  # OFFSET : 커밋된 메시지의 오프셋 값을 저장하는 토픽
+  # STATUS : 커넥트의 상태를 저장하는 토픽
+  # CONFIG : 커넥트의 설정을 저장하는 토픽
+
   kafka-connect:
     image: debezium/connect:2.4
     container_name: kafka-connect
